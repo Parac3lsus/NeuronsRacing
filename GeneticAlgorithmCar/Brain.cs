@@ -13,7 +13,6 @@ public class Brain : MonoBehaviour
 	private Rigidbody rb;
 	private Collider collider;
 	private MeshCollider meshCollider;
-	private bool loadFromFile = false;
 
 	[HideInInspector]
 	public DNA dna;
@@ -50,6 +49,11 @@ public class Brain : MonoBehaviour
 		sensorySystem = GetComponent<BrainSensorySystem>();
 		geneSelector = GetComponent<GeneSelector>();
 		popManager = FindObjectOfType<PopulationManager>();
+	}
+
+	public void Start()
+	{
+		Init(true);
 	}
 
 	private void OnCollisionEnter(Collision collision)
