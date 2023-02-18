@@ -7,10 +7,12 @@ public class ProgressDetector : MonoBehaviour
 {
 	//Total Checkpoints will be assigned by the RaceManager at Start
 	public Transform nextCheckpointTransform;
+	public Transform previousCheckpointTransform;
 	public int totalCheckpoints;
 	public int laps;
 	public int position;
 	public int checkpoints;
+	public bool checkpointPassed = false;
 	
 	private int nextCheckPointNumber = 1;
 	private Transform thisTransform;
@@ -21,6 +23,14 @@ public class ProgressDetector : MonoBehaviour
 	}
 
 
+	public void ResetDetector()
+	//To be used by ANNBrain during training
+	{
+		nextCheckPointNumber = 1;
+		checkpoints = 0;
+		laps = 0;
+		checkpointPassed = false;
+	}
 
 	public float DistanceToNextCheckpoint()
 	{
@@ -37,8 +47,10 @@ public class ProgressDetector : MonoBehaviour
 				int chkpNumber = checkPoint.GetCheckpointNumber();
 				if(chkpNumber == nextCheckPointNumber)
 				{
+					checkpointPassed = true;
 					checkpoints += 1;
 					nextCheckPointNumber += 1;
+					previousCheckpointTransform = nextCheckpointTransform;
 					nextCheckpointTransform = checkPoint.GetNextCheckpointTransform();
 					if(checkpoints >= totalCheckpoints)
 					{

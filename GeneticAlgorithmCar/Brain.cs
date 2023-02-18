@@ -14,6 +14,10 @@ public class Brain : MonoBehaviour
 	private Collider collider;
 	private MeshCollider meshCollider;
 
+	private BrainSensorySystem sensorySystem;
+	private GeneSelector geneSelector;
+	private StuckDetector stuckDetector;
+
 	[HideInInspector]
 	public DNA dna;
 	[HideInInspector]
@@ -23,8 +27,6 @@ public class Brain : MonoBehaviour
 	[HideInInspector]
 	public CarDrive carController;
 
-	private BrainSensorySystem sensorySystem;
-	private GeneSelector geneSelector;
 
 	public void Init(bool loadF)
 	{
@@ -49,6 +51,7 @@ public class Brain : MonoBehaviour
 		sensorySystem = GetComponent<BrainSensorySystem>();
 		geneSelector = GetComponent<GeneSelector>();
 		popManager = FindObjectOfType<PopulationManager>();
+		stuckDetector = GetComponent<StuckDetector>();
 	}
 
 	public void Start()
@@ -56,15 +59,24 @@ public class Brain : MonoBehaviour
 		Init(true);
 	}
 
-	private void OnCollisionEnter(Collision collision)
-	{
-		if (collision.gameObject.CompareTag("Track")) return;
+	private void DisableCar() {
+		//this function is not implemented during gameplay
 		popManager.DeadAgent();
 		rb.constraints = RigidbodyConstraints.FreezeAll;
 		alive = false;
 		collider.enabled = false;
 		meshCollider.enabled = false;
-		
+	}
+
+	private void OnCollisionEnter(Collision collision)
+	{
+		if (collision.gameObject.CompareTag("Track")) return;
+		if (popManager)
+		{
+			//If we are Evolving(training)
+			//in case of crash the car gets disabled
+			DisableCar();		
+		}
 	}
 
 	private void Update()
@@ -98,6 +110,7 @@ public class Brain : MonoBehaviour
 			accel = dna.GetGene(0);
 		}
 
+
 		carController.ProcessInputs(accel, steer);
 	}
 
@@ -117,7 +130,7 @@ public class Brain : MonoBehaviour
 		if (File.Exists(path))
 		{
 			string line = wf.ReadLine();
-			Debug.Log("Gene Line: " + line);
+			//Debug.Log("Gene Line: " + line);
 			dna.LoadGenes(line);
 		}
 	}

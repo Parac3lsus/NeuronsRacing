@@ -41,6 +41,19 @@ public class BrainSensorySystem : MonoBehaviour
 	[HideInInspector]
 	public bool crashRight;
 
+	//[HideInInspector]
+	public float HitDistanceForward;
+	//[HideInInspector]
+	public float HitDistanceLeft;
+	//[HideInInspector]
+	public float HitDistanceRight;
+	//[HideInInspector]
+	public float HitCrashForward;
+	//[HideInInspector]
+	public float HitCrashLeft;
+	//[HideInInspector]
+	public float HitCrashRight;
+
 	private void GetPathRaycast(ref RaycastHit forwardL, ref RaycastHit forwardR, ref RaycastHit hitLeft, ref RaycastHit hitRight)
 	{
 		// We have 2 raycast hits for the forward path
@@ -63,11 +76,13 @@ public class BrainSensorySystem : MonoBehaviour
 		if (hForwardL.collider == null && hForwardR.collider == null)
 		{
 			freePathForward = true;
+			HitDistanceForward = 1;
 			Debug.DrawRay(leftEye.transform.position, Quaternion.AngleAxis(-5, Vector3.up) * leftEye.transform.forward * driveFrontVisibleDistance, Color.green);
 			Debug.DrawRay(rightEye.transform.position, Quaternion.AngleAxis(5, Vector3.up) * rightEye.transform.forward * driveFrontVisibleDistance, Color.green);
 		}
 		else
 		{
+			HitDistanceForward = 0;
 			Debug.DrawRay(leftEye.transform.position, Quaternion.AngleAxis(-5, Vector3.up) * leftEye.transform.forward * driveFrontVisibleDistance, Color.red);
 			Debug.DrawRay(rightEye.transform.position, Quaternion.AngleAxis(5, Vector3.up) * rightEye.transform.forward * driveFrontVisibleDistance, Color.red);
 		}
@@ -75,20 +90,24 @@ public class BrainSensorySystem : MonoBehaviour
 		if (hLeft.collider == null)
 		{
 			freePathLeft = true;
+			HitDistanceLeft = 1;
 			Debug.DrawRay(leftEye.transform.position, Quaternion.AngleAxis(45, Vector3.up) * -leftEye.transform.right * driveDiagonalVisibleDistance, Color.green);
 		}
 		else
 		{
+			HitDistanceLeft = 0;
 			Debug.DrawRay(leftEye.transform.position, Quaternion.AngleAxis(45, Vector3.up) * -leftEye.transform.right * driveDiagonalVisibleDistance, Color.red);
 		}
 
 		if (hRight.collider == null)
 		{
 			freePathRight = true;
+			HitDistanceRight = 1;
 			Debug.DrawRay(rightEye.transform.position, Quaternion.AngleAxis(-45, Vector3.up) * rightEye.transform.right * driveDiagonalVisibleDistance, Color.green);
 		}
 		else
 		{
+			HitDistanceRight = 0;
 			Debug.DrawRay(rightEye.transform.position, Quaternion.AngleAxis(-45, Vector3.up) * rightEye.transform.right * driveDiagonalVisibleDistance, Color.red);
 		}
 	}
@@ -106,29 +125,35 @@ public class BrainSensorySystem : MonoBehaviour
 	{
 		if (hForward.collider == null)
 		{
+			HitCrashForward = 1000;
 			Debug.DrawRay(frontalCrashDetector.transform.position, frontalCrashDetector.transform.forward * frontCrashDetectorDistance, Color.blue);
 		}
 		else
 		{
 			crashFront = true;
+			HitCrashForward = hForward.distance;
 			Debug.DrawRay(frontalCrashDetector.transform.position, frontalCrashDetector.transform.forward * frontCrashDetectorDistance, Color.yellow);
 		}
 		if (hLeft.collider == null)
 		{
+			HitCrashLeft = 1000;
 			Debug.DrawRay(leftCrashDetector.transform.position, -leftCrashDetector.transform.right * lateralCrashDetectorDistance, Color.blue);
 		}
 		else
 		{
 			crashLeft = true;
+			HitCrashLeft = hLeft.distance;
 			Debug.DrawRay(leftCrashDetector.transform.position, -leftCrashDetector.transform.right * lateralCrashDetectorDistance, Color.yellow);
 		}
 		if (hRight.collider == null)
 		{
+			HitCrashRight = 1000;
 			Debug.DrawRay(rightCrashDetector.transform.position, rightCrashDetector.transform.right * lateralCrashDetectorDistance, Color.blue);
 		}
 		else
 		{
 			crashRight = true;
+			HitCrashRight = hRight.distance;
 			Debug.DrawRay(rightCrashDetector.transform.position, rightCrashDetector.transform.right * lateralCrashDetectorDistance, Color.yellow);
 		}
 	}
@@ -153,4 +178,5 @@ public class BrainSensorySystem : MonoBehaviour
 		ProcessPathForward(hitPathForwardL, hitPathForwardR, hitPathLeft, hitPathRight);
 		ProcessCrashDanger(hitCrashForward, hitCrashLeft, hitCrashRight);
 	}
+
 }

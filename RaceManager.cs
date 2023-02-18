@@ -13,8 +13,11 @@ public class RaceManager : MonoBehaviour
 	private int totalCheckpoints;
 	[SerializeField]
 	private int totalLaps;
-
+	[SerializeField]
+	private bool ExpectatorMode = false;
+	[SerializeField]
 	private PlayerUI uI;
+	
 	private int currentPlayeerPosition;
 	private int currentPlayerLap;
 	private Rigidbody rb;
@@ -25,11 +28,17 @@ public class RaceManager : MonoBehaviour
 	private void Start()
 	{
 		currentPlayeerPosition = 1;
-		currentPlayerLap = playerProgress.laps;
+		//currentPlayerLap = playerProgress.laps;
+		if (ExpectatorMode)
+		{
+			playerProgress = carsProgress[0];
+			playerProgress.position = 1;
+		}
+		
 		rb = playerProgress.gameObject.GetComponent<Rigidbody>();
-		uI = FindObjectOfType<PlayerUI>();
 		scores = new Scores[carsProgress.Length];
 		AssignTotalCheckpoints();
+		//AssignPositions();
 		uI.UpdatePosition(currentPlayeerPosition, carsProgress.Length);
 		//DebugScores();
 	}
@@ -86,6 +95,7 @@ public class RaceManager : MonoBehaviour
 			scores[i].score = carsProgress[scores[i].index].laps * 1000 + carsProgress[scores[i].index].checkpoints * 100
 							- carsProgress[scores[i].index].DistanceToNextCheckpoint();
 		}
+		//DebugScores();
 	}
 	
 	private void SortScores()
@@ -127,8 +137,15 @@ public class RaceManager : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		speed = (int)rb.velocity.magnitude * 10;
+		speed = (int)playerProgress.gameObject.GetComponent<Rigidbody>().velocity.magnitude * 10;
 		AssignPositions();
 		uI.UpdatePosition(playerProgress.position, carsProgress.Length);
+	}
+
+	public void AssignSelectedCar(int index)
+	{
+		if (index < carsProgress.Length)
+			playerProgress = carsProgress[index];
+		UpdatePositions();
 	}
 }

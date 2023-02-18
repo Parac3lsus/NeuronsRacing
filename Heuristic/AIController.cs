@@ -27,8 +27,10 @@ public class AIController : MonoBehaviour
 
         tracker = GameObject.CreatePrimitive(PrimitiveType.Capsule);
         DestroyImmediate(tracker.GetComponent<Collider>());
+
         //Comment this line for tracker debugging
-        //tracker.GetComponent<MeshRenderer>().enabled = false;
+        tracker.GetComponent<MeshRenderer>().enabled = false;
+        
         tracker.transform.position = this.transform.position;
         tracker.transform.rotation = this.transform.rotation;
         avoid = this.GetComponent<AvoidDetector>();
@@ -39,7 +41,6 @@ public class AIController : MonoBehaviour
         ProgressTracker();
         target = tracker.transform.position;
 
-        //Vector3 localtarget = this.transform.InverseTransformPoint(target);
         Vector3 localTarget;
         if (Time.time < avoid.avoidTime)
             localTarget = tracker.transform.right * avoid.avoidPath;
