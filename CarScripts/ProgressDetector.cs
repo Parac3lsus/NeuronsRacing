@@ -21,6 +21,7 @@ public class ProgressDetector : MonoBehaviour
 
 	public delegate void RaceFinished();
 	public static event RaceFinished OnRaceFinished;
+	public bool HumanPlayer = false;
 
 	private void Start()
 	{
@@ -63,10 +64,21 @@ public class ProgressDetector : MonoBehaviour
 						checkpoints = 0;
 						nextCheckPointNumber = 1;
 						if (laps >= totLaps)
+						{
 							OnRaceFinished();
+							if (HumanPlayer)
+								HumanPlayerRaceFinished();
+						}
 					}
 				}
 			}
 		}
+	}
+
+	private void HumanPlayerRaceFinished()
+	{
+		PlayerUI playerUI;
+		playerUI = GetComponent<PlayerUI>();
+		playerUI.ShowFlag();
 	}
 }
