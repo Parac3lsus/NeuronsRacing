@@ -28,7 +28,6 @@ public class RaceManager : MonoBehaviour
 	private void Start()
 	{
 		currentPlayeerPosition = 1;
-		//currentPlayerLap = playerProgress.laps;
 		if (ExpectatorMode)
 		{
 			playerProgress = carsProgress[0];
@@ -38,7 +37,6 @@ public class RaceManager : MonoBehaviour
 		rb = playerProgress.gameObject.GetComponent<Rigidbody>();
 		scores = new Scores[carsProgress.Length];
 		AssignTotalCheckpoints();
-		//AssignPositions();
 		uI.UpdatePosition(currentPlayeerPosition, carsProgress.Length);
 		//DebugScores();
 	}
