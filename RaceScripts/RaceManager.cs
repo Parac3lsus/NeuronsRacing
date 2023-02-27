@@ -39,6 +39,9 @@ public class RaceManager : MonoBehaviour
 		AssignTotalCheckpoints();
 		uI.UpdatePosition(currentPlayeerPosition, carsProgress.Length);
 		//DebugScores();
+
+		//We speed up the game a bit to make it more exciting
+		Time.timeScale = 1.5f;
 	}
 
 	private void DebugScores()
@@ -145,5 +148,17 @@ public class RaceManager : MonoBehaviour
 		if (index < carsProgress.Length)
 			playerProgress = carsProgress[index];
 		UpdatePositions();
+	}
+
+	public List<ProgressDetector> GetPositions()
+	{
+		List<ProgressDetector> finalScores = new List<ProgressDetector>();
+		AssignScores();
+		SortScores();
+		for (int i = 0; i < scores.Length; i++)
+		{
+			finalScores.Add(carsProgress[scores[i].index]);
+		}
+		return finalScores;
 	}
 }
