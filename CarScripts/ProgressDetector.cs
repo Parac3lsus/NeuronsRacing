@@ -5,6 +5,7 @@ using System;
 
 public class ProgressDetector : MonoBehaviour
 {
+	public String carName;
 	//Total Checkpoints will be assigned by the RaceManager at Start
 	public Transform nextCheckpointTransform;
 	public Transform previousCheckpointTransform;
@@ -12,10 +13,14 @@ public class ProgressDetector : MonoBehaviour
 	public int laps;
 	public int position;
 	public int checkpoints;
+	public int totLaps = 4;
 	public bool checkpointPassed = false;
 	
 	private int nextCheckPointNumber = 1;
 	private Transform thisTransform;
+
+	public delegate void RaceFinished();
+	public static event RaceFinished OnRaceFinished;
 
 	private void Start()
 	{
@@ -57,6 +62,8 @@ public class ProgressDetector : MonoBehaviour
 						laps += 1;
 						checkpoints = 0;
 						nextCheckPointNumber = 1;
+						if (laps >= totLaps)
+							OnRaceFinished();
 					}
 				}
 			}
