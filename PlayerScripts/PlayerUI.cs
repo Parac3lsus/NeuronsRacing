@@ -11,6 +11,13 @@ public class PlayerUI : MonoBehaviour
 	private TMPro.TextMeshProUGUI speedText;
 	[SerializeField]
 	private TMPro.TextMeshProUGUI positionText;
+	[SerializeField]
+	private GameObject flag;
+
+	private void Start()
+	{
+		flag.SetActive(false);
+	}
 
 	public void UpdateLapsText(int lapNr)
 	{
@@ -24,6 +31,11 @@ public class PlayerUI : MonoBehaviour
 	public void UpdatePosition(int pos, int nrOfPlayers)
 	{
 		positionText.text = pos.ToString() + "/" + nrOfPlayers.ToString();
+	}
+
+	public void ShowFlag()
+	{
+		flag.SetActive(true);
 	}
 
 }

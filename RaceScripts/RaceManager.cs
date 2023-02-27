@@ -41,7 +41,7 @@ public class RaceManager : MonoBehaviour
 		//DebugScores();
 
 		//We speed up the game a bit to make it more exciting
-		Time.timeScale = 2.5f;
+		Time.timeScale = 1.5f;
 	}
 
 	private void DebugScores()
