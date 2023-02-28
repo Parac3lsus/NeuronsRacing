@@ -18,6 +18,8 @@ public class CarDrive : MonoBehaviour
 	private WheelDrive[] wheels;
 	private Rigidbody rb;
 
+	public bool carEnabled = false;
+
 	private void Start()
 	{
 		wheels = GetComponentsInChildren<WheelDrive>();
@@ -81,6 +83,7 @@ public class CarDrive : MonoBehaviour
 
 	public void ProcessInputs(float accel, float steer)
 	{
+		if (!carEnabled) return;
 		float dotProduct = Vector3.Dot(this.gameObject.transform.forward, rb.velocity);
 		bool goingForward = (dotProduct >= 0.01f);
 
