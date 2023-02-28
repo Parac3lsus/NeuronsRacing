@@ -10,6 +10,9 @@ public class RaceCountDown : MonoBehaviour
 	private GameObject yellowLight;
 	[SerializeField]
 	private GameObject greenLight;
+	[SerializeField]
+	private AudioSource countDownAudio;
+
 
 	private CarDrive[] carDriveControllers;
 
@@ -44,11 +47,12 @@ public class RaceCountDown : MonoBehaviour
 	{
 		yield return new WaitForSeconds(1.5f);
 		redLight.SetActive(true);
-		yield return new WaitForSeconds(1.5f);
+		countDownAudio.Play();
+		yield return new WaitForSeconds(1.3f);
 		yellowLight.SetActive(true);
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1.4f);
 		greenLight.SetActive(true);
-		yield return new WaitForSeconds(1.5f);
+		yield return new WaitForSeconds(1.8f);
 		DisableLights();
 		SetCarsActiveState(true);
 	}
