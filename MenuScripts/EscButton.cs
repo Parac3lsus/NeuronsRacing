@@ -27,6 +27,7 @@ public class EscButton : MonoBehaviour
 
 	public void SelectedOption(int opt)
 	{
+		Time.timeScale = raceManager.timeScale;
 		if (opt == 1)
 		{
 			sceneLoader.LoadSlectedScene(0);
@@ -40,6 +41,5 @@ public class EscButton : MonoBehaviour
 	public void ContinueExcecution()
 	{
 		ExitMenu.SetActive(false);
-		Time.timeScale = raceManager.timeScale;
 	}
 }

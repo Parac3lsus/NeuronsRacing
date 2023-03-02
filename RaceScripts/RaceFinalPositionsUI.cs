@@ -6,8 +6,8 @@ public class RaceFinalPositionsUI : MonoBehaviour
 {
 	[SerializeField]
 	private TMPro.TextMeshProUGUI[] driverNameText;
-	[SerializeField]
-	private GameObject RacingDataUI;
+	//[SerializeField]
+	//private GameObject RacingDataUI;
 	[SerializeField]
 	private GameObject FinalPositionsUI;
 
@@ -31,7 +31,7 @@ public class RaceFinalPositionsUI : MonoBehaviour
 			Debug.Log("Position: " + i+1 + "Car Name: " + finalPositions[i].carName);
 			driverNameText[i].text = finalPositions[i].carName;
 		}
-		RacingDataUI.SetActive(false);
+		//RacingDataUI.SetActive(false);
 		FinalPositionsUI.SetActive(true);
 
 
