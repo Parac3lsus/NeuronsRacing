@@ -24,6 +24,7 @@ public class RaceManager : MonoBehaviour
 	private int speed;
 	public Scores[] scores;
 	private bool positionChange;
+	public float timeScale = 1.5f;
 
 	private void Start()
 	{
@@ -41,7 +42,7 @@ public class RaceManager : MonoBehaviour
 		//DebugScores();
 
 		//We speed up the game a bit to make it more exciting
-		Time.timeScale = 1.5f;
+		Time.timeScale = timeScale;
 	}
 
 	private void DebugScores()
