@@ -18,6 +18,7 @@ public class ProgressDetector : MonoBehaviour
 	
 	private int nextCheckPointNumber = 1;
 	private Transform thisTransform;
+	private CarRespawner respawner;
 
 	public delegate void RaceFinished();
 	public static event RaceFinished OnRaceFinished;
@@ -26,6 +27,7 @@ public class ProgressDetector : MonoBehaviour
 	private void Start()
 	{
 		thisTransform = this.gameObject.transform;
+		respawner = GetComponent<CarRespawner>();
 	}
 
 
