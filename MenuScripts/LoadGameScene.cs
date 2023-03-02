@@ -6,11 +6,15 @@ using UnityEngine.SceneManagement;
 public class LoadGameScene : MonoBehaviour
 {
 	[SerializeField]
+	private string mainMenu = "MainMenu";
+	[SerializeField]
 	private string playerRace = "PlayerRace";
 	[SerializeField]
 	private string iaRace = "IACompetition";
 	public void LoadSlectedScene(int selectedScene)
 	{
+		if (selectedScene == 0)
+			SceneManager.LoadScene(mainMenu);
 		if (selectedScene == 1)
 			SceneManager.LoadScene(playerRace);
 		if (selectedScene == 2)
