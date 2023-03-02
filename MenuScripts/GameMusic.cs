@@ -4,8 +4,31 @@ using UnityEngine;
 
 public class GameMusic : MonoBehaviour
 {
+	[SerializeField]
+	private AudioSource gameMusic;
+
+	public static GameMusic instance;
+
 	private void Awake()
 	{
-		DontDestroyOnLoad(this.gameObject);
+		if(instance == null)
+		{
+			instance = this;
+			DontDestroyOnLoad(this);
+			gameMusic.Play();
+		}
+		else if(instance != null)
+		{
+			Destroy(this.gameObject);
+		}
 	}
+
+	/*private void Start()
+	{
+		if (!gameMusic.isPlaying)
+		{
+			gameMusic.Play();
+		}
+		
+	}*/
 }
