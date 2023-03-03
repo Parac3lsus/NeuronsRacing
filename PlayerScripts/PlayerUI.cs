@@ -12,6 +12,8 @@ public class PlayerUI : MonoBehaviour
 	[SerializeField]
 	private TMPro.TextMeshProUGUI positionText;
 	[SerializeField]
+	private TMPro.TextMeshProUGUI driverNameText;
+	[SerializeField]
 	private GameObject flag;
 
 	private void Start()
@@ -36,6 +38,11 @@ public class PlayerUI : MonoBehaviour
 	public void ShowFlag()
 	{
 		flag.SetActive(true);
+	}
+
+	public void UpdateDriverName(string name)
+	{
+		driverNameText.text = name;
 	}
 
 }
